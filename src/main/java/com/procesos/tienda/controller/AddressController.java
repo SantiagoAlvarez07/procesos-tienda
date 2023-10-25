@@ -1,6 +1,7 @@
 package com.procesos.tienda.controller;
 
 import com.procesos.tienda.model.Address;
+import com.procesos.tienda.model.User;
 import com.procesos.tienda.service.AddressService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,12 @@ public class AddressController
     @Autowired
     private AddressService addressService;
 
+    @GetMapping("address/{id}")
+    public ResponseEntity getAddressById(@PathVariable Long id){
+        return ResponseEntity.ok(addressService.getAddressById(id));
+    }
+
+
     @PostMapping("address/{idUser}")
     public ResponseEntity<Address> create(@Valid @RequestBody Address address,@PathVariable Long idUser){
         return new ResponseEntity<>(addressService.createAddress(address, idUser), HttpStatus.CREATED);
@@ -25,7 +32,7 @@ public class AddressController
         return ResponseEntity.ok(addressService.updateStatusAddress(id));
     }
 
-    @GetMapping("address/{id}")
+    @GetMapping("address")
     public ResponseEntity findAll(){
         return ResponseEntity.ok(addressService.findAllAddress());
     }
